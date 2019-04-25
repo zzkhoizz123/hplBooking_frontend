@@ -10,6 +10,7 @@ import Profile from './components/Profile';
 
 import Home from './components/Home';
 import Signin from './components/Signin';
+import Patient from './components/Patient/PatientPage';
 
 require('./css/App.css');
 require('./css/bootstrap.css');
@@ -24,6 +25,8 @@ class App extends Component {
         <div>   
           <Route path='/home' component={Home} />
           <Route path='/signin' component={Signin} />
+          <Route path='/patient' render = {(props) => <Patient {...props} header={Header} />} />
+
           <Route path='/about' component={About} />
           <Route path='/contact' component={Contact} />
           <Route path='/price' component={Price} />

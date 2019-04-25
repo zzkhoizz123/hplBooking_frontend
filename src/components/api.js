@@ -61,6 +61,24 @@ var signin = (username, password) => {
   });
 };
 
+var getuser = () =>{
+  return new Promise((resolve, reject) => {
+    let header = 'Bearer ' + sessionStorage.getItem('jwt');
+    users_instance.defaults.headers.common['Authorization'] = header;
+    users_instance
+      .get('/me')
+      .then(response => {
+        if (response['data']['success'] != true) {
+          return reject(response['data']['message']);
+        }
+        return resolve(response['data']['data']);
+      })
+      .catch(err => {
+        return reject(err);
+      });
+  });
+};
+
 var changepassword = (username, password, new_password) => {
   return new Promise((resolve, reject) => {
     let header = 'Bearer ' + sessionStorage.getItem('jwt');
@@ -88,5 +106,6 @@ var changepassword = (username, password, new_password) => {
 module.exports = {
   signup,
   signin,
-  changepassword
+  changepassword,
+  getuser
 };

@@ -22,14 +22,15 @@ class Signin extends React.Component {
         phoneNumber: '',
         sex: 'male',
         DoB: moment(Date.now()).format("YYYY-MM-DD"),
-        department: 0,
-        room: 0
+        department: "1",
+        room: ""
       },
       formSignin:{
         username:'',
         password:''
       },
       tab : 'tab-1',
+      field: '',
       err: false,
     };
   }
@@ -40,46 +41,36 @@ class Signin extends React.Component {
     })
   }
 
+  onDoctorField = e =>{
+    this.setState({
+      field: e.target.id
+    })
+  }
+
+  onPatientField = e =>{
+    this.setState({
+      field: ''
+    })
+  }
+
 
   onSubmitSignup(e) {
     e.preventDefault();
 
-    // let name = this.state.form['name'];
-    // let username = this.state.form['username'];
-    // let password = this.state.form['password'];
-    // let rePass = this.state.form['rePAss'];
-    // let email = this.state.form['email'];
-    // let address = this.state.form['address'];
-    // let role = this.state.form['role'];
-    // let SSN = this.state.form['SSN'];
-    // let phoneNumber = this.state.form['phoneNumber'];
-    // let DoB = this.state.form['DoB']; 
-    // let sex = this.state.form['sex'];
-
     const {name, username, password, rePass, email, role, SSN, 
           phoneNumber, DoB, sex, department, room} = this.state.formSignup;
+
+    const department1 = parseInt(department, 10);
+    const room1 = parseInt(room, 10)
     if(password !== rePass){
       alert("password incorrect!");
       return;
     }
 
-    // console.log("name " + name);
-    // console.log("username " + username);
-    // console.log("password " + password);
-    // console.log("rePass " + rePass);
-    // console.log("email " + email);
-    // console.log("SSN " + SSN);
-    // console.log("phoneNumber " + phoneNumber);
-    // console.log("DoB " + DoB);
-    // console.log("sex " + sex);
-    // console.log("role " + role);
-    // console.log("department " + department);
-    // console.log("room " + room);
-
     api
-      .signup(name, username, password, email,  role, SSN, phoneNumber, DoB, sex, department, room)
+      .signup(name, username, password, email,  role, SSN, phoneNumber, DoB, sex, department1, room1)
       .then(status => {
-        //alert("Sign up success! Let go to Sign in");
+        alert("Sign up success! Let go to Sign in");
         this.props.history.go("/signin");
         this.forceUpdate();
       })
@@ -95,8 +86,8 @@ class Signin extends React.Component {
 
     const {username, password} = this.state.formSignin;
 
-    console.log("username " + username);
-    console.log("pass " + password);
+    //console.log("username " + username);
+   // console.log("pass " + password);
   
     api
       .signin(username, password)
@@ -105,7 +96,7 @@ class Signin extends React.Component {
         sessionStorage.setItem('role', data.role);
         sessionStorage.setItem('jwt', data.token);
         sessionStorage.setItem('id', data.id);
-        this.props.history.replace('/home');
+        this.props.history.go(-1);
         this.forceUpdate();
       })
       .catch(err => {
@@ -128,6 +119,48 @@ class Signin extends React.Component {
   };
 
   render() {
+   let departmentbar, roombar;
+    if(this.state.field == ''){
+      departmentbar = (<div></div>);
+      roombar = (<div></div>);
+    }
+    else{
+      departmentbar = (
+        <div className="group">
+          <label htmlFor="dep" className="label">Department</label>
+          Đa Khoa: <input id="dep" type="radio" 
+            value = "1"
+            checked={this.state.formSignup.department === '1'}
+            onChange={this.handleChangeSignup.bind(this, 'department')}              
+            /> <br />
+          Nha Khoa: <input id="dep" type="radio" 
+            value="2"
+            checked={this.state.formSignup.department === '2'}
+            onChange={this.handleChangeSignup.bind(this, 'department')}              
+            /> <br />
+          Tim Mạch: <input id="dep" type="radio" 
+            value="3"
+            checked={this.state.formSignup.department === '3'}
+            onChange={this.handleChangeSignup.bind(this, 'department')}              
+            /> <br />
+          Tai Mũi Họng: <input id="dep" type="radio" 
+            value="4"
+            checked={this.state.formSignup.department === '4'}
+            onChange={this.handleChangeSignup.bind(this, 'department')}              
+            />
+        </div>
+      );
+      roombar = (
+        <div className="group">
+          <label htmlFor="room" className="label">Room</label>
+          <input type="text" className="input" 
+            value={this.state.formSignup["room"]}
+            onChange={this.handleChangeSignup.bind(this, 'room')}
+          />
+        </div>
+      );
+    }
+
     return (
       <div>
         <section className={this.state.tab == "tab-2" ? "signup-wrap" : "login-wrap"  }>
@@ -258,17 +291,20 @@ class Signin extends React.Component {
 
                   <div className="group">
                     <label htmlFor="role" className="label">Role</label>
-                    Patient: <input id="role" type="radio" 
-                      value = "patient"
-                      checked={this.state.formSignup.role === 'patient'}
-                      onChange={this.handleChangeSignup.bind(this, 'role')}              
-                      /> <br />
-                    Doctor: <input id="role" type="radio" 
-                      value="doctor"
-                      checked={this.state.formSignup.role === 'doctor'}
-                      onChange={this.handleChangeSignup.bind(this, 'role')}              
-                      /> 
+                      Patient: <input id="role" type="radio" onClick= {this.onPatientField}
+                        value = "patient"
+                        checked={this.state.formSignup.role === 'patient'}
+                        onChange={this.handleChangeSignup.bind(this, 'role')}              
+                        /> <br />
+                      Doctor: <input id="role" type="radio" onClick= {this.onDoctorField} 
+                        value="doctor"
+                        checked={this.state.formSignup.role === 'doctor'}
+                        onChange={this.handleChangeSignup.bind(this, 'role')}              
+                        />
+                    
                   </div>
+                  {departmentbar}
+                  {roombar}
 
                   <div className="group">
                     <input type="submit" className="button" defaultValue="Sign Up" />

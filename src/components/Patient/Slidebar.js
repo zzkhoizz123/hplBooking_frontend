@@ -16,7 +16,7 @@ export default class SlideBar extends React.Component {
         defaultActive="3"
         className="el-menu-vertical-demo"
         theme="dark"
-        style={{ height: 850 }}
+        style={{height: 1000}}
       >
         <a href="/patient">
           <Menu.Item index="1">
@@ -38,7 +38,7 @@ export default class SlideBar extends React.Component {
           </Menu.Item>
         </a>
         
-        <a href="/patient/recruitment ">
+        <a href="/patient/recruitment">
           <Menu.Item index="4">
             <i className="el-icon-document" />
             Booking

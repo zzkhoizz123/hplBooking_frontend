@@ -23,22 +23,26 @@ export default class Recruitment extends React.Component {
     this.state = {
       success: false,
       form: {
-        address: '',
-        salary: '',
-        timespan: null,
-        date: null,
-        worktime: null,
-        type: '',
-        desc: '',
+        date: moment(Date.now()).format("YYYY-MM-DD"),
+        shift: '',
+        department: ''
+        //doctor?
       },
-      salary_options: [
-        { label: '50.000/hour', value: 0 },
-        { label: '75.000/hour', value: 1 },
-        { label: '100.000/hour', value: 2 },
-        { label: '150.000/hour', value: 3 },
-        { label: '200.000/hour', value: 4 },
-        { label: '250.000/hour', value: 5 },
-        { label: '300.000/hour', value: 6 },
+      shift_options: [
+        { label: '7h - 8h', value: 1 },
+        { label: '8h - 9h', value: 2 },
+        { label: '9h - 10h', value: 3 },
+        { label: '10h - 11h', value: 4 },
+        { label: '13h - 14h', value: 5 },
+        { label: '14h - 15h', value: 6 },
+        { label: '15h - 16h', value: 7 },
+        { label: '16h - 17h', value: 8 }
+      ],
+      department_options: [
+        { label: 'XXX', value: 1 },
+        { label: 'Nha Khoa', value: 2 },
+        { label: 'Tim mạch', value: 3 },
+        { label: 'Tai mũi họng', value: 4 }
       ],
     };
 
@@ -49,14 +53,20 @@ export default class Recruitment extends React.Component {
     e.preventDefault();
 
     let id = sessionStorage.getItem('id');
-    const description = this.state.desc;
-    const typeWork = this.state.type;
-    const date = this.state.date;
-    const worktime = this.state.worktime;
-    const location = this.state.address;
-    const salary = this.state.salary_options[this.state.salary].label;
+    // const description = this.state.desc;
+    // const typeWork = this.state.type;
+    const date = moment(this.state.date).format("YYYY-MM-DD");
+    console.log(date);
+    // const strDate = (date.getFullYear() + '-' + (date.getMonth() +  1) + '-' + date.getDate()).toString();
+    // console.log(strDate);
+    
+    // const worktime = this.state.worktime;
+    // const location = this.state.address;
+    const shift = this.state.shift;
+    const department = this.state.department;
+    // const department = this.state.department_options[this.state.department.label].value;
 
-    if (date === null || worktime === null) {
+    if (date === null ) {
       return;
     }
 
@@ -64,30 +74,26 @@ export default class Recruitment extends React.Component {
     //    select date
     //    select hour-minutes
     //    turns into unix time
-    const time_to_work = moment(date).add({
-      hours: moment(worktime).hours(),
-      minutes: moment(worktime).minutes(),
-    });
+    // const time_to_work = moment(date).add({
+    //   hours: moment(worktime).hours(),
+    //   minutes: moment(worktime).minutes(),
+    // });
 
     // work duration, not yet in UI, default to 3hours
-    let timespan = this.state.timespan;
-    timespan = 3 * 60 * 60 * 1000;
+    // let timespan = this.state.timespan;
+    // timespan = 3 * 60 * 60 * 1000;
     api
-      .createWork(
-        id,
-        typeWork,
-        time_to_work.valueOf(),
-        timespan,
-        salary,
-        location,
-        description
+      .booking(
+        date,
+        shift,
+        department
       )
       .then(data => {
         this.setState({
           success: true,
         });
         Notification.success({
-          title: 'Create work success',
+          title: 'Đăng kí lịch khám thành công',
         });
       })
       .catch(err => {
@@ -96,11 +102,13 @@ export default class Recruitment extends React.Component {
   }
 
   handleChange = name => value => {
+    console.log("Bạn thay đổi " + name + " thành " + value)
     this.setState({ [name]: value });
   };
 
   render() {
-    if (this.state.success) return <Redirect to="/users1/schedule" />;
+    // if (this.state.success) return <Redirect to="/users1/schedule" />;
+    // if (this.state.success) alert("OK");
     return (
       <div style={{ width: 800, marginTop: 100, marginLeft: 100 }}>
         <Form
@@ -109,32 +117,15 @@ export default class Recruitment extends React.Component {
           labelWidth="120"
           onSubmit={this.onSubmit.bind(this)}
         >
-          <Form.Item label="Address">
+          {/* <Form.Item label="Address">
             <Input
               value={this.state.address}
               onChange={this.handleChange('address')}
               style={{ marginLeft: 30 }}
             />
-          </Form.Item>
-          <Form.Item label="Salary">
-            <Select
-              onChange={this.handleChange('salary')}
-              value={this.state.salary}
-              style={{ marginLeft: 30 }}
-              placeholder="Please select salary for helper"
-            >
-              {this.state.salary_options.map(el => {
-                return (
-                  <Select.Option
-                    key={el.label}
-                    label={el.label}
-                    value={el.value}
-                  />
-                );
-              })}
-            </Select>
-          </Form.Item>
-          <Form.Item label="Date">
+          </Form.Item> */}
+          
+          <Form.Item label="Ngày khám">
             <Layout.Col span="11">
               <Form.Item
                 prop="date"
@@ -151,7 +142,7 @@ export default class Recruitment extends React.Component {
             <Layout.Col className="line" span="2">
               -
             </Layout.Col>
-            <Layout.Col span="11">
+            {/* <Layout.Col span="11">
               <Form.Item prop="time" labelWidth="0px">
                 <TimePicker
                   value={this.state.worktime}
@@ -160,8 +151,47 @@ export default class Recruitment extends React.Component {
                   onChange={this.handleChange('worktime')}
                 />
               </Form.Item>
-            </Layout.Col>
+            </Layout.Col> */}
           </Form.Item>
+
+          <Form.Item label="Khung giờ">
+            <Select
+              onChange={this.handleChange('shift')}
+              value={this.state.shift}
+              style={{ marginLeft: 30 }}
+              placeholder="Vui lòng chọn khung giờ khám"
+            >
+              {this.state.shift_options.map(el => {
+                return (
+                  <Select.Option
+                    key={el.label}
+                    label={el.label}
+                    value={el.value}
+                  />
+                );
+              })}
+            </Select>
+          </Form.Item>
+
+          <Form.Item label="Chuyên Khoa">
+            <Select
+              onChange={this.handleChange('department')}
+              value={this.state.department}
+              style={{ marginLeft: 30 }}
+              placeholder="Vui lòng chọn chuyên khoa"
+            >
+              {this.state.department_options.map(el => {
+                return (
+                  <Select.Option
+                    key={el.label}
+                    label={el.label}
+                    value={el.value}
+                  />
+                );
+              })}
+            </Select>
+          </Form.Item>
+{/* 
 
           <Form.Item label="Activity type">
             <Checkbox.Group
@@ -199,7 +229,7 @@ export default class Recruitment extends React.Component {
               style={{ marginLeft: 30, width: 550 }}
               onChange={this.handleChange('desc')}
             />
-          </Form.Item>
+          </Form.Item> */}
           <Form.Item>
             <Button
               type="primary"

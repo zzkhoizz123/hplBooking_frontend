@@ -153,8 +153,8 @@ export default class Profile extends React.Component{
               </Form.Item> */}
 
             <Form.Item style={{marginTop: 30}}>
-              <Button type="primary" nativeType="submit" style={{marginLeft: 60}}>Save</Button>
-              <Button style={{marginLeft: 140}}>Cancel</Button>
+              <Button type="primary" nativeType="submit" style={{marginRight: 100}}>Save</Button>
+              <Button style={{marginLeft: 100}}>Cancel</Button>
             </Form.Item>
 
           </Form>

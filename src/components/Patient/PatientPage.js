@@ -9,7 +9,7 @@ import SliderBar from './Slidebar';
 
 import Profile from './../Profile';
 import ChangePassword from './../ChangePassword';
-//import Schedule from './../schedule';
+import Schedule from './../chedule';
 import Booking from './../Booking';
 
 require('./../../css/App.css');
@@ -50,14 +50,14 @@ export default class HelperPage extends React.Component {
                   component={ChangePassword}
                   header={SliderBar}
                 />
-                {/* <Route
+                <Route
                   path ="/patient/schedule"
                   component={Schedule}
                 //   render = {(props) =>
                 //   <Schedule {...props}
                   header={SliderBar}
                   />}
-                /> */}
+                />
 
 
                 <Route

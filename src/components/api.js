@@ -10,6 +10,10 @@ const users_instance = axios.create({
   baseURL: API_URL + '/users',
 });
 
+const seats_instance = axios.create({
+  baseURL: API_URL + '/seats',
+});
+
 var signup = (name, username, password, email,  role, SSN, phoneNumber, DoB, sex, department, room) => {
   //console.log("uname: " + username)
   let role1 = 0;
@@ -102,10 +106,42 @@ var changepassword = (username, password, new_password) => {
 };
 
 
+var booking = (date, shift, department ) => {
+  console.log("Ca: " + shift);
+  console.log("Ngày: " + date);
+  console.log("Department: " + department);
+
+  return new Promise((resolve, reject) => {
+    let header = 'Bearer ' + sessionStorage.getItem('jwt');
+    seats_instance.defaults.headers.common['Authorization'] = header;
+    seats_instance
+      .post('/', {
+        date,
+        shift,
+        department
+      })
+      
+      .then(response => {
+        
+        if (response['data']['success'] != true) {
+          console.log(response['data']['success']);
+          return reject(response['data']['message']);
+        }
+        
+        return resolve(response['data']['success']);
+      })
+      .catch(err => {
+        return reject(err);
+      });
+  });
+};
+
+
 
 module.exports = {
   signup,
   signin,
   changepassword,
-  getuser
+  getuser,
+  booking
 };

@@ -14,88 +14,132 @@ export default class Schedule extends React.Component {
     this.state = {
       // newContractAddress: null,
       // currentContract: [],
-      // isLoading: false,
+      isLoading: false,
       // drizzleState: null,
       columns: [
         {
-          label: 'Time',
+          label: 'Start Time',
           prop: 'time',
-          width: 120,
+          width: 240,
           sortable: true,
         },
         {
-          label: 'Duration',
-          prop: 'timespan',
-          width: 100,
+          label: 'Department',
+          prop: 'department',
+          width: 240,
           sortable: true,
         },
         {
-          label: 'Salary',
-          prop: 'salary',
-          width: 100,
+          label: 'Room',
+          prop: 'room',
+          width: 240,
           sortable: true,
         },
         {
-          label: 'Owner',
-          prop: 'owner',
-          width: 130,
+          label: 'STT',
+          prop: 'stt',
+          width: 240,
           sortable: true,
         },
         {
-          label: 'Helper',
-          prop: 'helper',
-          width: 130,
-          sortable: true,
-        },
-        {
-          label: 'Address',
-          prop: 'address',
-          width: 150,
-        },
-        {
-          label: 'Type',
-          prop: 'type',
+          label: 'Doctor',
+          prop: 'doctor',
+          width: 240,
           sortable: true,
         },
 
         {
-          label: 'Status',
-          prop: 'status',
-        },
-
-        {
-          label: 'Operations',
-          prop: 'contractAddress',
-          width: 120,
-          fixed: 'right',
+          label: '',
+          prop: '',
+          width: 240,
+          sortable: true,
           render: (row, column, index) => {
-            if (this.state.data[index].helper == 'Not Assigned')
-              return <p>No Helper, no contract</p>;
-            if (this.state.data[index].contractAddress)
-              return (
-                  <Button
-                    type="text"
-                    size="small"
-                    // onClick={this.getContract.bind(this, index)}
-                    onClick = {this.watchContract.bind(this, index)}
-                    
-                  >
-                    {this.state.data[index].contractAddress}
-                  </Button>
-              );
-            if (sessionStorage.getItem('role') === '0')
-              return <p>Waiting for contract</p>;
             return (
-              <Button
+              <Button 
                 type="text"
                 size="small"
-                onClick={this.createContract.bind(this, index)}
+                onClick={this.deteteSeat.bind(this, index)}
               >
-                Create contract
+                <p></p> <img style={{width: '15%', height: '15%'}} src={require("../images/delete.png")}  alt="my image"/>
+                
               </Button>
             );
-          },
+          }
         },
+
+        // {
+        //   label: 'Duration',
+        //   prop: 'timespan',
+        //   width: 100,
+        //   sortable: true,
+        // },
+        // {
+        //   label: 'Salary',
+        //   prop: 'salary',
+        //   width: 100,
+        //   sortable: true,
+        // },
+        // {
+        //   label: 'Owner',
+        //   prop: 'owner',
+        //   width: 130,
+        //   sortable: true,
+        // },
+        // {
+        //   label: 'Helper',
+        //   prop: 'helper',
+        //   width: 130,
+        //   sortable: true,
+        // },
+        // {
+        //   label: 'Address',
+        //   prop: 'address',
+        //   width: 150,
+        // },
+        // {
+        //   label: 'Type',
+        //   prop: 'type',
+        //   sortable: true,
+        // },
+
+        // {
+        //   label: 'Status',
+        //   prop: 'status',
+        // },
+
+        // {
+        //   label: 'Operations',
+        //   prop: 'contractAddress',
+        //   width: 120,
+        //   fixed: 'right',
+        //   render: (row, column, index) => {
+        //     if (this.state.data[index].helper == 'Not Assigned')
+        //       return <p>No Helper, no contract</p>;
+        //     if (this.state.data[index].contractAddress)
+        //       return (
+        //           <Button
+        //             type="text"
+        //             size="small"
+        //             // onClick={this.getContract.bind(this, index)}
+        //             onClick = {this.watchContract.bind(this, index)}
+                    
+        //           >
+        //             {this.state.data[index].contractAddress}
+        //           </Button>
+        //       );
+        //     if (sessionStorage.getItem('role') === '0')
+        //       return <p>Waiting for contract</p>;
+        //     return (
+        //       <Button
+        //         type="text"
+        //         size="small"
+        //         onClick={this.createContract.bind(this, index)}
+        //       >
+        //         Create contract
+        //       </Button>
+        //     );
+        //   },
+        // },
       ],
       data: [],
     };
@@ -104,6 +148,29 @@ export default class Schedule extends React.Component {
   watchContract(index) {
     window.open("https://ropsten.etherscan.io/address/" + this.state.data[index].contractAddress);
   }
+
+  deteteSeat(index){
+    const idSeat = this.state.data[index]._id;
+    api
+      .deleteSeat(idSeat)
+      .then(data =>{
+        if(data){
+          alert("Bạn đã xóa thành công")
+        }
+        else alert("Con khỉ khô")
+      })
+      .catch(err => {
+        alert("Error occur");
+      })
+
+      // .finally(() => {
+      //   this.setState({
+      //     isLoading: false,
+      //   });
+      // })
+
+  }
+
 
   // createContract(index) {
   //   const { drizzle, drizzleState } = this.props;
@@ -176,62 +243,71 @@ export default class Schedule extends React.Component {
   //     });
   // }
 
-  getContract(index) {
-    const { drizzle, drizzleState } = this.props;
+  // getContract(index) {
+  //   const { drizzle, drizzleState } = this.props;
 
-    const work = this.state.data[index];
+  //   const work = this.state.data[index];
 
-    // var web3 = new Web3(drizzle.web3.currentProvider);
-    // var instance = new web3.eth.Contract(Work.abi, work.contractAddress);
+  //   // var web3 = new Web3(drizzle.web3.currentProvider);
+  //   // var instance = new web3.eth.Contract(Work.abi, work.contractAddress);
 
-    // instance.methods.getData().call({
-    //   from: drizzleState.accounts[0],
-    //   gas: 1500000,
-    //   gasPrice: '10000000000',
-    // })
-    // .then((result) => {
-    //   this.setState({
-    //     currentContract: result
-    //   });
-    //   console.log(result)
-    //   // MessageBox.alert(JSON.stringify(result), 'Contract data');
-    // })
-  }
+  //   // instance.methods.getData().call({
+  //   //   from: drizzleState.accounts[0],
+  //   //   gas: 1500000,
+  //   //   gasPrice: '10000000000',
+  //   // })
+  //   // .then((result) => {
+  //   //   this.setState({
+  //   //     currentContract: result
+  //   //   });
+  //   //   console.log(result)
+  //   //   // MessageBox.alert(JSON.stringify(result), 'Contract data');
+  //   // })
+  // }
 
   componentDidMount() {   
-    // api
-    //   .getWorkListOfUser()
-    //   .then(data => {
-    //     // alert(JSON.stringify(data));
-    //     data.map(d => {
-    //       d.time = new Date(Date.parse(d.time));
-    //       d.time = d.time.toLocaleString();
-    //       d.timespan = moment.duration(d.timespan).asHours();
-    //       d._owner = d.owner;
-    //       d.owner = d.owner.username;
-    //       d._helper = d.helper;
-    //       d.helper = d.helper ? d.helper.username : 'Not Assigned';
-    //       d.status = d.status == 0 ? 'Due' : 'Done';
-    //       d.address = d.location;
-    //       d.salary = d.expectedSalary;
-    //     });
-    //     this.setState({ data });
-    //   })
-    //   .catch(err => {
-    //     alert(err);
-    //   });
+    api
+      .getAllSeats()
+      .then(data => {
+        console.log(typeof data)
+        
+        // alert(JSON.stringify(data));
+        data.map(d => {
+          d.time = new Date(Date.parse(d.startTime));
+          // d.time = d.startTime.toLocaleString();
+          d.time = moment(d.time).format("DD-MM-YYYY HH:mm:ss");
+          d.department = d.department;
+          d.room = d.room;
+          d.stt = d.STT;
+          d._doctor = d.doctor;
+          d.doctor = d.doctor.username;
+
+          // d.timespan = moment.duration(d.timespan).asHours();
+          // d._owner = d.owner;
+          // d.owner = d.owner.username;
+          // d._helper = d.helper;
+          // d.helper = d.helper ? d.helper.username : 'Not Assigned';
+          // d.status = d.status == 0 ? 'Due' : 'Done';
+          // d.address = d.location;
+          // d.salary = d.expectedSalary;
+        });
+        this.setState({ data });
+      })
+      .catch(err => {
+        alert(err);
+      });
   }
 
   render() {
     return (
-      //<Loading loading={this.state.isLoading} text="Creating smart contract">
+      // <Loading loading={this.state.isLoading} text="Updating ...">
         <Table
           style={{ width: '100%', backgroundcolor: '1111' }}
           columns={this.state.columns}
           data={this.state.data}
           border
         />
-      //</Loading>
+      // </Loading>
     );
   }
 }

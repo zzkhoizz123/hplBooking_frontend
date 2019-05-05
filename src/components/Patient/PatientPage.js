@@ -9,7 +9,7 @@ import SliderBar from './Slidebar';
 
 import Profile from './../Profile';
 import ChangePassword from './../ChangePassword';
-import Schedule from './../chedule';
+import Schedule from './../Schedule';
 import Booking from './../Booking';
 
 require('./../../css/App.css');

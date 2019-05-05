@@ -137,11 +137,78 @@ var booking = (date, shift, department ) => {
 };
 
 
+var getAllSeats = () => {
+
+  return new Promise((resolve, reject) => {
+    let header = 'Bearer ' + sessionStorage.getItem('jwt');
+    seats_instance.defaults.headers.common['Authorization'] = header;
+    seats_instance
+      .get('/all_seat', {
+      })
+      
+      .then(response => {
+        
+        if (response['data']['success'] != true) {
+          console.log(response['data']['success']);
+          return reject(response['data']['message']);
+        }
+        
+        response['data']['data'].forEach(element => {
+          // console.log(element);
+          users_instance.defaults.headers.common['Authorization'] = header;
+          users_instance
+            .get('/user/'+element.doctor, {})
+            .then(response => {
+              if (response['data']['success'] != true) {
+                // console.log(response['data']['success']);
+                return reject(response['data']['message']);
+              }
+              
+              element.doctor = response['data']['data'].username;
+            } )
+        });
+
+        return resolve(response['data']['data']);
+      })
+      .catch(err => {
+        return reject(err);
+      });
+  });
+};
+
+
+var deleteSeat = (id) => {
+
+  return new Promise((resolve, reject) => {
+    let header = 'Bearer ' + sessionStorage.getItem('jwt');
+    seats_instance.defaults.headers.common['Authorization'] = header;
+    seats_instance
+      .delete('/' + id, {
+      })
+      
+      .then(response => {
+        
+        if (response['data']['success'] != true) {
+          console.log(response['data']['success']);
+          return reject(response['data']['message']);
+        }
+        
+        return resolve(response['data']['success']);
+      })
+      .catch(err => {
+        return reject(err);
+      });
+  });
+};
+
+
 
 module.exports = {
   signup,
   signin,
   changepassword,
   getuser,
-  booking
+  booking,
+  getAllSeats,
+  deleteSeat
 };

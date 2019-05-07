@@ -1,5 +1,5 @@
 import React from 'react';
-
+import {NavLink} from 'react-router-dom'
 
 class Header extends React.Component {
   
@@ -27,16 +27,21 @@ class Header extends React.Component {
     let profilebar, loginbar;
 
     if(this.state.username == null || this.state.username == "null"){
-      loginbar = (<li><a href="/signin">Sign In/Up</a></li>);
+      
+      loginbar = (<li><NavLink to="/signin" activeClassName="active">Đăng nhập/Đăng ký</NavLink></li>);
+      // loginbar = (<li><a href="/signin">Đăng nhập/Đăng ký</a></li>);
       profilebar = (<a></a>); 
     }
     else if(this.state.role == 0){
+      // profilebar = (<li><NavLink to="/patient" activeClassName="active">{this.state.username}</NavLink></li>);
+      // loginbar = (<li><NavLink to="/" activeClassName="active" onClick={this.handleSignout}>Đăng xuất</NavLink></li>);   
       profilebar = (<li><a href="/patient">{this.state.username}</a></li>);
-      loginbar = (<li><a href="/home" onClick={this.handleSignout}>Sign Out</a></li>);    
+      loginbar = (<li><a href="/" onClick={this.handleSignout}>Đăng xuất</a></li>);    
     }
     else{
+      // <NavLink to="/signin" activeClassName="active">Đăng nhập/Đăng ký</NavLink>
       profilebar = (<li><a href="/doctor">{this.state.username}</a></li>);
-      loginbar = (<li><a href="/home" onClick={this.handleSignout}>Sign Out</a></li>);     
+      loginbar = (<li><a href="/" onClick={this.handleSignout}>Đăng xuất</a></li>);     
     }
     
     return (
@@ -44,7 +49,7 @@ class Header extends React.Component {
       <div className="header d-lg-flex justify-content-between align-items-center py-3 px-sm-3">
         {/* logo */}
         <div id="logo">
-          <h1><a href="/home"><span className="fa fa-linode mr-2" />Startup</a></h1>
+          <h1><a href="/"><span className="fa fa-linode mr-2" />HplBooking</a></h1>
         </div>
         {/* //logo */}
         {/* nav */}
@@ -53,16 +58,22 @@ class Header extends React.Component {
             <label htmlFor="drop" className="toggle">Menu</label>
             <input type="checkbox" id="drop" />
             <ul className="menu">
-              <li><a href="/home" className="active">Home</a></li>
-              <li><a href="/about">About Us</a></li>
+              <li><NavLink exact to="/" activeClassName="active">Trang chủ</NavLink></li>
+              {/* <li><a href="/" className="active">Trang chủ</a></li> */}
+              <li><NavLink to="/about" activeClassName="active">Về chúng tôi</NavLink></li>
+              {/* <li><a href="/about" >Về chúng tôi</a></li> */}
               {/* <li><a href="/signin">Sign In/Up</a></li> */}
-              <li><a href="/contact">Contact Us</a></li>
-              <li><a href="/price">Price</a></li>
+              <li><NavLink to="/contact" activeClassName="active">Liên hệ</NavLink></li>
+              {/* <li><a href="/contact">Liên hệ</a></li> */}
+              <li><NavLink to="/price" activeClassName="active">Giá cả</NavLink></li>
+              {/* <li><a href="/price">Giá cả</a></li> */}
+
+           
+
               {profilebar}
               {loginbar}
               
-              <li>
-                {/* First Tier Drop Down */}
+              {/* <li>
                 <label htmlFor="drop-2" className="toggle toogle-2">Dropdown <span className="fa fa-angle-down" aria-hidden="true" />
                 </label>
                 <a href="#">Dropdown <span className="fa fa-angle-down" aria-hidden="true" /></a>
@@ -76,7 +87,7 @@ class Header extends React.Component {
                   <li><a href="about.html" className="drop-text">Our Team</a></li>
                   <li><a href="#partners" className="drop-text">Partners</a></li>
                 </ul>
-              </li>
+              </li> */}
               
             </ul>
           </nav>

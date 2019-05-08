@@ -1,5 +1,5 @@
 import React from 'react';
-
+// import ScrollUpButton from "react-scroll-up-button";
 
 class Footer extends React.Component {
   render() {
@@ -35,16 +35,14 @@ class Footer extends React.Component {
             {/* //footer social icons */}
             {/* copyright */}
             <div className="copy_right mx-md-auto mb-md-0 mb-3">
-              <p className="text-bl let">© 2019 Startup. All rights reserved | Design by
-                <a href="http://w3layouts.com/" target="_blank">W3layouts</a>
+              <p className="text-bl let">© 2019 HplBooking
               </p>
             </div>
             {/* //copyright */}
             {/* move top icon */}
-            <a href="#home" className="move-top text-center">
+            <a href="#" className="move-top text-center">
               <span className="fa fa-level-up" aria-hidden="true" />
             </a>
-            {/* //move top icon */}
           </div>
         </div>
       </div>

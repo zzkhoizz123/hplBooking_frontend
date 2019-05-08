@@ -67,6 +67,15 @@ class Signin extends React.Component {
       return;
     }
 
+    if (
+      username.length < 6 ||
+      password.length < 8 ||
+      !this.validateEmail(email)
+    ) {
+      alert('Input is false! Check again!');
+      return;
+    }
+
     api
       .signup(name, username, password, email,  role, SSN, phoneNumber, DoB, sex, department1, room1)
       .then(status => {
@@ -105,6 +114,12 @@ class Signin extends React.Component {
       });
 
   }
+
+  validateEmail(email) {
+    var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+  }
+
 
   handleChangeSignup = (key, event) => {
     this.setState({
@@ -223,6 +238,14 @@ class Signin extends React.Component {
                       value={this.state.formSignup["username"]}
                       onChange={this.handleChangeSignup.bind(this, 'username')}
                     required />
+                    {this.state.formSignup.username.length < 6 &&
+                    this.state.formSignup.username.length > 0 ? (
+                      <h6 style={{ color: 'red', marginLeft: 140 }}>
+                        User name có ít nhất 6 kí tự{' '}
+                      </h6>
+                    ) : (
+                      ''
+                    )}
                   </div>
 
                   <div className="group">
@@ -231,6 +254,16 @@ class Signin extends React.Component {
                       value={this.state.formSignup.password}
                       onChange={this.handleChangeSignup.bind(this, 'password')}           
                     required />
+
+                    {this.state.formSignup.password.length < 8 &&
+                    this.state.formSignup.password.length > 0 ? (
+                      <h6 style={{ color: 'red', marginLeft: 140 }}>
+                        Password có ít nhất 8 kí tự{' '}
+                      </h6>
+                    ) : (
+                      ''
+                    )}
+
                   </div>
 
                   <div className="group">
@@ -241,6 +274,17 @@ class Signin extends React.Component {
                     onChange={this.handleChangeSignup.bind(this, 'rePass')}  
                     
                     required />
+
+                    {this.state.formSignup.rePass.length < 8 &&
+                    this.state.formSignup.rePass.length > 0 && 
+                    this.state.formSignup.password != this.state.formSignup.rePass? (
+                      <h6 style={{ color: 'red', marginLeft: 140 }}>
+                        Password phải trùng nhau{' '}
+                      </h6>
+                    ) : (
+                      ''
+                    )}
+                    
                   </div>
 
                   <div className="group">
@@ -249,6 +293,15 @@ class Signin extends React.Component {
                        value={this.state.formSignup.email}
                       onChange={this.handleChangeSignup.bind(this, 'email')}              
                     required />
+                    {this.state.formSignup.email === '' ? (
+                      ''
+                    ) : this.validateEmail(this.state.formSignup.email) ? (
+                      ''
+                    ) : (
+                      <h6 style={{ color: 'red', marginLeft: 140 }}>
+                        Vui lòng nhập đúng email{' '}
+                      </h6>
+                    )}
                   </div>
 
                   <div className="group">

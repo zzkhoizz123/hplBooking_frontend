@@ -1219,6 +1219,16 @@ button.btn-cont-w3 {
   display: block;
 }
 
+
+input.el-input__inner  {
+  border: 1px solid #1fcdb4;
+  border-radius: 20px;
+}
+
+
+
+
+
 /* //contact page */
 
 /* responsive */

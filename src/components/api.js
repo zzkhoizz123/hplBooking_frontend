@@ -137,7 +137,7 @@ var booking = (date, shift, department ) => {
 };
 
 
-var getAllSeats = () => {
+var getAllSeats = (role) => {
 
   return new Promise((resolve, reject) => {
     let header = 'Bearer ' + sessionStorage.getItem('jwt');
@@ -156,16 +156,33 @@ var getAllSeats = () => {
         response['data']['data'].forEach(element => {
           // console.log(element);
           users_instance.defaults.headers.common['Authorization'] = header;
-          users_instance
-            .get('/user/'+element.doctor, {})
-            .then(response => {
-              if (response['data']['success'] != true) {
-                // console.log(response['data']['success']);
-                return reject(response['data']['message']);
-              }
-              
-              element.doctor = response['data']['data'].username;
-            } )
+          if(role == 0){
+            users_instance
+              .get('/user/'+element.doctor, {})
+              .then(response => {
+                if (response['data']['success'] != true) {
+                  // console.log(response['data']['success']);
+                  return reject(response['data']['message']);
+                }
+                
+                element.doctor = response['data']['data'].username;
+              } )
+          }
+          else{
+            users_instance.defaults.headers.common['Authorization'] = header;
+            users_instance
+              .get('/user/'+element.patient, {})
+              .then(response => {
+                if (response['data']['success'] != true) {
+                  // console.log(response['data']['success']);
+                  return reject(response['data']['message']);
+                }
+                
+                element.doctor = response['data']['data'].username;
+              } )
+          }
+          
+
         });
 
         return resolve(response['data']['data']);

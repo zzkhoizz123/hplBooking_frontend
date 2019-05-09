@@ -10,60 +10,65 @@ import api from './api';
 export default class Schedule extends React.Component {
   constructor(props) {
     super(props);
-
+    let role = sessionStorage.getItem('role');
     this.state = {
       // newContractAddress: null,
       // currentContract: [],
-      isLoading: false,
+      isLoading: true,
       // drizzleState: null,
+      // role: 0,
       columns: [
         {
-          label: 'Start Time',
+          label: 'Bắt đầu',
           prop: 'time',
-          width: 240,
+          width: 260,
           sortable: true,
         },
         {
-          label: 'Department',
+          label: 'Khoa',
           prop: 'department',
-          width: 240,
-          sortable: true,
+          width: 200,
+          sortable: false,
         },
         {
-          label: 'Room',
+          label: 'Phòng',
           prop: 'room',
-          width: 240,
-          sortable: true,
+          width: 200,
+          sortable: false,
         },
         {
           label: 'STT',
           prop: 'stt',
-          width: 240,
-          sortable: true,
+          width: 200,
+          sortable: false,
         },
         {
-          label: 'Doctor',
+          label: role == 0 ? 'Bác sĩ' : 'Bệnh nhân',
           prop: 'doctor',
-          width: 240,
-          sortable: true,
+          width: role == 0 ? 200 : 320,
+          sortable: false,
         },
-
+          
         {
-          label: '',
+          label: role == 0 ? 'Hủy lịch' : '',
           prop: '',
-          width: 240,
-          sortable: true,
+          width: role == 0 ? 200 : 0,
+          sortable: false,
           render: (row, column, index) => {
-            return (
-              <Button 
-                type="text"
-                size="small"
-                onClick={this.deteteSeat.bind(this, index)}
-              >
-                <p></p> <img style={{width: '15%', height: '15%'}} src={require("../images/delete.png")}  alt="my image"/>
-                
-              </Button>
-            );
+            if (sessionStorage.getItem('role') == 0){
+              return (
+                <Button 
+                  style={{textAlign: "left"}}
+                  type="text"
+                  size="small"
+                  onClick={this.deteteSeat.bind(this, index)}
+                >
+                  <p></p> <img style={{width: '15%', height: '15%'}} src={require("../images/delete.png")}  alt="my image"/>
+                  
+                </Button>
+              );
+            }
+            
           }
         },
 
@@ -267,20 +272,25 @@ export default class Schedule extends React.Component {
 
   componentDidMount() {   
     api
-      .getAllSeats()
+      .getAllSeats(sessionStorage.getItem('role'))
       .then(data => {
-        console.log(typeof data)
+        // console.log(typeof data)
         
         // alert(JSON.stringify(data));
         data.map(d => {
+          
           d.time = new Date(Date.parse(d.startTime));
           // d.time = d.startTime.toLocaleString();
+         
           d.time = moment(d.time).format("DD-MM-YYYY HH:mm:ss");
+          
           d.department = d.department;
           d.room = d.room;
           d.stt = d.STT;
-          d._doctor = d.doctor;
-          d.doctor = d.doctor.username;
+          d.doctor = d.doctor;
+          
+          // d._doctor =  d.doctor;
+          // d.doctor = d.doctor ? d.doctor.username : 'Not Assigned';
 
           // d.timespan = moment.duration(d.timespan).asHours();
           // d._owner = d.owner;
@@ -291,6 +301,7 @@ export default class Schedule extends React.Component {
           // d.address = d.location;
           // d.salary = d.expectedSalary;
         });
+        
         this.setState({ data });
       })
       .catch(err => {
@@ -300,12 +311,12 @@ export default class Schedule extends React.Component {
 
   render() {
     return (
-      // <Loading loading={this.state.isLoading} text="Updating ...">
+      // <Loading loading={this.state.isLoading} text="Loading ...">
         <Table
-          style={{ width: '100%', backgroundcolor: '1111' }}
+          // style={{ width: '100%'}}
           columns={this.state.columns}
           data={this.state.data}
-          border
+          // border
         />
       // </Loading>
     );

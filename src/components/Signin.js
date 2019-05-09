@@ -105,8 +105,12 @@ class Signin extends React.Component {
         sessionStorage.setItem('role', data.role);
         sessionStorage.setItem('jwt', data.token);
         sessionStorage.setItem('id', data.id);
-        this.props.history.go(-1);
-        this.forceUpdate();
+        // this.props.history.go(-1);
+        // this.forceUpdate();
+        this.props.history.push("/")
+        window.location.reload();
+       
+        
       })
       .catch(err => {
         alert("Input is false. Check again!");

@@ -15,10 +15,9 @@ class Home extends React.Component{
             <div className="container">
               <div className="d-md-flex">
                 <div className="w3ls_banner_txt">
-                  <h3 className="w3ls_pvt-title">Business <br /><span>Startup</span></h3>
-                  <p className="text-sty-banner">Sed ut perspiciatis unde omnis iste natus doloremque
-                    laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi.</p>
-                  <a href={"/about"} className="btn button-style mt-md-5 mt-4">Read More</a>
+                  <h3 className="w3ls_pvt-title">Đặt lịch <br /><span>khám bệnh</span></h3>
+                  <p className="text-sty-banner">Chúng tôi cung cấp cho các bạn hệ thống đặt lịch khám bệnh nhanh chóng.</p>
+                  <a href={"/about"} className="btn button-style mt-md-5 mt-4">Xem thêm</a>
                 </div>
                 <div className="banner-img">
                   <img src={require("../images/banner.png")} alt="true" className="img-fluid" />
@@ -47,25 +46,25 @@ class Home extends React.Component{
               <div className="col-lg-4 about-grid">
                 <div className="about-grid-main">
                   <img src={require("../images/img1.png")} alt="true" className="img-fluid" />
-                  <h4 className="my-4">Dolor Sit</h4>
-                  <p> Ut enim ad minim veniam, quis nostrud.Excepteur sint occaecat cupidatat non proident</p>
-                  <a href="/about" className="button-w3ls btn mt-sm-5 mt-4">Read More</a>
+                  <h4 className="my-4">Nhanh chóng</h4>
+                  <p> Quá trình đặt lịch hoàn thành nhanh chóng chỉ trong vòng 1 phút.</p>
+                  <a href="/about" className="button-w3ls btn mt-sm-5 mt-4">Xem thêm</a>
                 </div>
               </div>
               <div className="col-lg-4 about-grid my-lg-0 my-5">
                 <div className="about-grid-main">
-                  <img src={require("../images/img2.png")} alt="true" className="img-fluid" />
-                  <h4 className="my-4">Conse Tetur</h4>
-                  <p>Ut enim ad minim veniam, quis nostrud.Excepteur sint occaecat cupidatat non proident</p>
-                  <a href="/about" className="button-w3ls btn mt-sm-5 mt-4">Read More</a>
+                  <img src={require("../images/img3.png")} alt="true" className="img-fluid" />
+                  <h4 className="my-4">Giá cả hợp lý</h4>
+                  <p>Hệ thống đặt lịch không phụ thu chi phí so với khám bệnh trực tiếp.</p>
+                  <a href="/about" className="button-w3ls btn mt-sm-5 mt-4">Xem thêm</a>
                 </div>
               </div>
               <div className="col-lg-4 about-grid">
                 <div className="about-grid-main">
-                  <img src={require("../images/img3.png")} alt="true" className="img-fluid" />
-                  <h4 className="my-4">Adip Cing</h4>
-                  <p>Ut enim ad minim veniam, quis nostrud.Excepteur sint occaecat cupidatat non proident</p>
-                  <a href="/about" className="button-w3ls btn mt-sm-5 mt-4">Read More</a>
+                  <img src={require("../images/img2.png")} alt="true" className="img-fluid" />
+                  <h4 className="my-4">Bảo vệ thông tin</h4>
+                  <p>Thông tin của bệnh nhân được bảo mật tuyệt đối.</p>
+                  <a href="/about" className="button-w3ls btn mt-sm-5 mt-4">Xem thêm</a>
                 </div>
               </div>
             </div>
@@ -77,8 +76,8 @@ class Home extends React.Component{
           <div className="container py-xl-5 py-lg-3">
             <div className="row">
               <div className="col-lg-6 about-right-faq">
-                <h6>Business Consultancy</h6>
-                <h3 className="text-da">25 Years of Industry Experience</h3>
+                <h6>Tiêu chí phục vụ</h6>
+                <h3 className="text-da">Phục vụ </h3>
                 <p className="mt-4">Integer pulvinar leo id viverra feugiat. Pellen tesque libero ut justo,
                   ultrices in ligula. Semper at tempufddfel, ultrices in ligula.</p>
                 <ul className="w3l-right-book mt-4">

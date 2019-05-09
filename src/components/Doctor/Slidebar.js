@@ -20,33 +20,33 @@ export default class SlideBar extends React.Component {
         style={{height: 1000}}
       >
 
-        <NavLink to="/patient">
+        <NavLink to="/doctor">
           <Menu.Item index="1">
             <i className="el-icon-date" />
             Thông tin cá nhân
           </Menu.Item>
         </NavLink>
 
-        <NavLink to="/patient/reset_password">
+        <NavLink to="/doctor/reset_password">
           <Menu.Item index="2">
             <i className="el-icon-menu" />
             Thay đổi mật khẩu
           </Menu.Item>
         </NavLink>
 
-        <NavLink to="/patient/schedule">
+        <NavLink to="/doctor/schedule">
           <Menu.Item index="3">
             <i className="el-icon-time" />
             Xem lịch khám
           </Menu.Item>
         </NavLink>
 
-        <NavLink to="/patient/recruitment">
+        {/* <NavLink to="/doctor/recruitment">
           <Menu.Item index="4">
             <i className="el-icon-document" />
             Đặt lịch
           </Menu.Item>
-        </NavLink>
+        </NavLink> */}
       </Menu>
     );
   }

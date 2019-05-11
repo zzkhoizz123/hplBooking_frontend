@@ -23,6 +23,10 @@ class Header extends React.Component {
     })
   }
 
+  // componentDidUpdate(){
+  //   window.location.reload();
+  // }
+
   render() {
     let profilebar, loginbar;
 

@@ -52,9 +52,10 @@ export default class HelperPage extends React.Component {
                 />
                 <Route
                   path ="/doctor/schedule"
-                  component={Schedule}
+                  // component={Schedule}
                 //   render = {(props) =>
                 //   <Schedule {...props}
+                  render={(props) => <Schedule {...props} role={1} />}
                   header={SliderBar}
                   />}
                 />

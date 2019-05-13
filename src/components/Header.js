@@ -32,7 +32,7 @@ class Header extends React.Component {
 
     if(this.state.username == null || this.state.username == "null"){
       
-      loginbar = (<li><NavLink to="/signin" activeClassName="active">Đăng nhập/Đăng ký</NavLink></li>);
+      loginbar = (<li><NavLink to="/signin" activeClassName="active" style={{fontWeight: 500, color: "blueviolet"}}>Đăng nhập/Đăng ký</NavLink></li>);
       // loginbar = (<li><a href="/signin">Đăng nhập/Đăng ký</a></li>);
       profilebar = (<a></a>); 
     }

@@ -218,7 +218,7 @@ class Signin extends React.Component {
                   </div>
                   <div className="hr" />
                   <div className="foot-lnk">
-                    <h2><a href="#">Forgot Password?</a></h2>
+                    <p><a href="#">Forgot Password?</a></p>
                   </div>
                 </form>
               </div>

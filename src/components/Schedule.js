@@ -1,6 +1,7 @@
 import React from 'react';
 import { Table, Button, Notification, Loading, MessageBox, Popover } from 'element-react';
 import * as moment from 'moment';
+import Simplert from 'react-simplert'
 
 // import Web3 from 'web3';
 
@@ -12,11 +13,11 @@ export default class Schedule extends React.Component {
     super(props);
     let role = sessionStorage.getItem('role');
     this.state = {
-      // newContractAddress: null,
-      // currentContract: [],
-      isLoading: true,
-      // drizzleState: null,
-      // role: 0,
+      showAlert: false,
+      titleAlert: '',
+      messageAlert: '',
+      typeAlert: '',
+
       columns: [
         {
           label: 'Bắt đầu',
@@ -72,79 +73,6 @@ export default class Schedule extends React.Component {
           }
         },
 
-        // {
-        //   label: 'Duration',
-        //   prop: 'timespan',
-        //   width: 100,
-        //   sortable: true,
-        // },
-        // {
-        //   label: 'Salary',
-        //   prop: 'salary',
-        //   width: 100,
-        //   sortable: true,
-        // },
-        // {
-        //   label: 'Owner',
-        //   prop: 'owner',
-        //   width: 130,
-        //   sortable: true,
-        // },
-        // {
-        //   label: 'Helper',
-        //   prop: 'helper',
-        //   width: 130,
-        //   sortable: true,
-        // },
-        // {
-        //   label: 'Address',
-        //   prop: 'address',
-        //   width: 150,
-        // },
-        // {
-        //   label: 'Type',
-        //   prop: 'type',
-        //   sortable: true,
-        // },
-
-        // {
-        //   label: 'Status',
-        //   prop: 'status',
-        // },
-
-        // {
-        //   label: 'Operations',
-        //   prop: 'contractAddress',
-        //   width: 120,
-        //   fixed: 'right',
-        //   render: (row, column, index) => {
-        //     if (this.state.data[index].helper == 'Not Assigned')
-        //       return <p>No Helper, no contract</p>;
-        //     if (this.state.data[index].contractAddress)
-        //       return (
-        //           <Button
-        //             type="text"
-        //             size="small"
-        //             // onClick={this.getContract.bind(this, index)}
-        //             onClick = {this.watchContract.bind(this, index)}
-                    
-        //           >
-        //             {this.state.data[index].contractAddress}
-        //           </Button>
-        //       );
-        //     if (sessionStorage.getItem('role') === '0')
-        //       return <p>Waiting for contract</p>;
-        //     return (
-        //       <Button
-        //         type="text"
-        //         size="small"
-        //         onClick={this.createContract.bind(this, index)}
-        //       >
-        //         Create contract
-        //       </Button>
-        //     );
-        //   },
-        // },
       ],
       data: [],
     };
@@ -160,7 +88,14 @@ export default class Schedule extends React.Component {
       .deleteSeat(idSeat)
       .then(data =>{
         if(data){
-          alert("Bạn đã xóa thành công")
+          this.componentWillMount()
+
+          this.setState({
+            showAlert: true,
+            titleAlert: 'Thành công',
+            messageAlert: 'Bạn đã chấp nhận bác sĩ thành công',
+            typeAlert: 'success'
+          })
         }
         else alert("Con khỉ khô")
       })
@@ -270,7 +205,7 @@ export default class Schedule extends React.Component {
   //   // })
   // }
 
-  componentDidMount() {   
+  componentWillMount() {   
     api
       .getAllSeats(sessionStorage.getItem('role'))
       .then(data => {
@@ -311,14 +246,20 @@ export default class Schedule extends React.Component {
 
   render() {
     return (
-      // <Loading loading={this.state.isLoading} text="Loading ...">
-        <Table
-          // style={{ width: '100%'}}
-          columns={this.state.columns}
-          data={this.state.data}
-          // border
+      <div>
+        <Simplert
+              showSimplert={this.state.showAlert}
+              type={this.state.typeAlert}
+              title={this.state.titleAlert}
+              message={this.state.messageAlert}
         />
-      // </Loading>
+          <Table
+            // style={{ width: '100%'}}
+            columns={this.state.columns}
+            data={this.state.data}
+            // border
+          />
+      </div>
     );
   }
 }

@@ -1,5 +1,6 @@
 import React from 'react'
 import api from './api';
+import {Notification} from 'element-react';
 
 require('../css/SignIn.css');
 
@@ -95,8 +96,8 @@ class Signin extends React.Component {
 
     const {username, password} = this.state.formSignin;
 
-    //console.log("username " + username);
-   // console.log("pass " + password);
+    // console.log("username " + username);
+    // console.log("pass " + password);
   
     api
       .signin(username, password)
@@ -105,15 +106,15 @@ class Signin extends React.Component {
         sessionStorage.setItem('role', data.role);
         sessionStorage.setItem('jwt', data.token);
         sessionStorage.setItem('id', data.id);
-        // this.props.history.go(-1);
-        // this.forceUpdate();
-        this.props.history.push("/")
+
+        this.props.history.push("/");
         window.location.reload();
-       
-        
+ 
       })
       .catch(err => {
-        alert("Input is false. Check again!");
+        Notification.error({
+          title: err
+        });
         //alert(err);
       });
 

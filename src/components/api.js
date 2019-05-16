@@ -219,6 +219,91 @@ var deleteSeat = (id) => {
 };
 
 
+var deleteUser = (id) => {
+
+  return new Promise((resolve, reject) => {
+    let header = 'Bearer ' + sessionStorage.getItem('jwt');
+    users_instance.defaults.headers.common['Authorization'] = header;
+    users_instance
+      .delete('/' + id, {
+      })
+      
+      .then(response => {
+        
+        if (response['data']['success'] != true) {
+          console.log(response['data']['success']);
+          return reject(response['data']['message']);
+        }
+        
+        return resolve(response['data']['success']);
+      })
+      .catch(err => {
+        return reject(err);
+      });
+  });
+};
+
+
+
+var acceptDoctor = (id) => {
+  return new Promise((resolve, reject) => {
+    let header = 'Bearer ' + sessionStorage.getItem('jwt');
+    users_instance.defaults.headers.common['Authorization'] = header;
+    users_instance
+      .post('/accept_doctor', {id})
+      .then(response => {
+        if (response['data']['success'] != true) {
+          return reject(response['data']['message']);
+        }
+        return resolve(response['data']['success']);
+      })
+      .catch(err => {
+        return reject(err);
+      });
+  });
+};
+
+
+var getAllDoctorsNotApprove = () => {
+
+  return new Promise((resolve, reject) => {
+    let header = 'Bearer ' + sessionStorage.getItem('jwt');
+    users_instance.defaults.headers.common['Authorization'] = header;
+    users_instance
+      .get('/all_doctor_not_appove', {
+      })
+      .then(response => {
+        
+        if (response['data']['success'] != true) {
+          console.log(response['data']['success']);
+          return reject(response['data']['message']);
+        }
+        
+        // response['data']['data'].forEach(element => {
+        //   // console.log(element);
+        //   users_instance.defaults.headers.common['Authorization'] = header;
+          
+        //   users_instance
+        //     .get('/user/'+element.doctor, {})
+        //     .then(response => {
+        //       if (response['data']['success'] != true) {
+        //         // console.log(response['data']['success']);
+        //         return reject(response['data']['message']);
+        //       }
+              
+        //       element.doctor = response['data']['data'].username;
+        //     } )
+
+        // });
+        // console.log(JSON.stringify(response['data']['data']));
+        return resolve(response['data']['data']);
+      })
+      .catch(err => {
+        return reject(err);
+      });
+  });
+};
+
 
 module.exports = {
   signup,
@@ -227,5 +312,8 @@ module.exports = {
   getuser,
   booking,
   getAllSeats,
-  deleteSeat
+  deleteSeat,
+  getAllDoctorsNotApprove,
+  deleteUser,
+  acceptDoctor
 };

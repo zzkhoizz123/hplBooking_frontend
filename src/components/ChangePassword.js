@@ -98,11 +98,11 @@ export default class ChangePassword extends React.Component {
                 />
               </Form.Item>
 
-              <Form.Item style={{ marginLeft: '300px', marginTop: 30 }}>
+              <Form.Item style={{ marginLeft: '100px', marginTop: 50 }}>
                 <Button
                   type="primary"
                   nativeType="submit"
-                  style={{ marginLeft: 60 }}
+                  style={{ marginLeft: 100 }}
                 >
                   Change
                 </Button>

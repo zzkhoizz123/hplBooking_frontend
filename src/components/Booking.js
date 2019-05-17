@@ -97,7 +97,10 @@ export default class Recruitment extends React.Component {
         });
       })
       .catch(err => {
-        alert(err);
+        Notification.error({
+          title: err,
+        });
+        // alert(err);
       });
   }
 

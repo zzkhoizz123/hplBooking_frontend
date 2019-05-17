@@ -77,7 +77,7 @@ export default class Profile extends React.Component{
     <Layout.Row>
       <Layout.Col span="7">
         <div className="grid-content bg-purple">
-          <img src="/people.jpg" alt="logo"/>
+          <img src={require("../images/user.png")} style={{width:"60%", marginLeft: 60, marginTop: 30 }} alt="logo"/>
         </div>
       </Layout.Col>
 
@@ -87,27 +87,27 @@ export default class Profile extends React.Component{
           <Form className="en-US" model={this.state} labelWidth="120" onSubmit={this.onSubmit.bind(this)}>
 
             <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>
-              <h5 className = "col-lg-2">Name</h5>
+              <h5 className = "col-lg-3">Name</h5>
               <Input className = "col-lg-10" name="username" value={this.state.name} onChange={this.handleChange('name')}></Input>
             </Form.Item>
 
             <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>
-              <h5 className = "col-lg-2">User Name</h5>
-              <Input className = "col-lg-10" style={{width: 700}} value={this.state.username} onChange={this.handleChange('username')}></Input>
+              <h5 className = "col-lg-3">User Name</h5>
+              <Input className = "col-lg-10" value={this.state.username} onChange={this.handleChange('username')}></Input>
             </Form.Item>
 
             <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>
-              <h5 className = "col-lg-2">Email</h5>
+              <h5 className = "col-lg-3">Email</h5>
               <Input className = "col-lg-10" value={this.state.email} onChange={this.handleChange('email')}></Input>
             </Form.Item>
 
             <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>
-              <h5 className = "col-lg-2">SSN</h5>
+              <h5 className = "col-lg-3">SSN</h5>
               <Input className = "col-lg-10" value={this.state.SSN} onChange={this.handleChange('SSN')}></Input>
             </Form.Item>
 
             <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>
-              <h5 className = "col-lg-2">Phone Number</h5>
+              <h5 className = "col-lg-3">Phone Number</h5>
               <Input className = "col-lg-10" value={this.state.phoneNumber} onChange={this.handleChange('phoneNumber')}></Input>
             </Form.Item>
 
@@ -121,6 +121,7 @@ export default class Profile extends React.Component{
                     />
                   </Form.Item> */}
                   <input id="DoB" type="date" className="input"
+                        style={{marginLeft: 15, border: '1px solid #65ddcb', paddingLeft: 60, borderRadius: 50}}
                         value={this.state.DoB}
                         onChange={this.handleChange.bind(this, 'DoB')}              
                         required />
@@ -135,14 +136,14 @@ export default class Profile extends React.Component{
 
               <Form.Item style={{marginLeft: "-160px"}}>
                 <h5 className = "col-lg-2" style={{marginRight: 15}}>Sex</h5>
-                <Radio value="female" checked={this.state.sex === 'female'} onChange={this.handleChange('sex')}>Female</Radio>
+                <Radio style={{marginLeft: 15}} value="female" checked={this.state.sex === 'female'} onChange={this.handleChange('sex')}>Female</Radio>
                 <Radio value="male" checked={this.state.sex === 'male'} onChange={this.handleChange('sex')}>Male</Radio>
               </Form.Item>
 
             <Form.Item style={{marginLeft: "-160px"}}>
               <h5 className = "col-lg-2" style={{marginRight: 15}}>Role</h5>
               
-              <Radio value="patient" checked={this.state.role === 'patient'} onChange={this.handleChange('role')}>Patient</Radio>
+              <Radio style={{marginLeft: 15}} value="patient" checked={this.state.role === 'patient'} onChange={this.handleChange('role')}>Patient</Radio>
 
               <Radio value="doctor" checked={this.state.position === 'doctor'} onChange={this.handleChange('role')}>Doctor</Radio>
             </Form.Item>

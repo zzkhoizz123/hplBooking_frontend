@@ -12,6 +12,7 @@ import Home from './components/Home';
 import Signin from './components/Signin';
 import Patient from './components/Patient/PatientPage';
 import Doctor from './components/Doctor/DoctorPage';
+import Admin from './components/Admin/AdminPage';
 
 require('./css/App.css');
 require('./css/bootstrap.css');
@@ -28,6 +29,7 @@ class App extends Component {
           <Route path='/signin' component={Signin} />
           <Route path='/patient' render = {(props) => <Patient {...props} header={Header} />} />
           <Route path='/doctor' render = {(props) => <Doctor {...props} header={Header} />} />
+          <Route path='/admin' render = {(props) => <Admin {...props} header={Header} />} />
 
           <Route path='/about' component={About} />
           <Route path='/contact' component={Contact} />

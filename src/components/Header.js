@@ -1,5 +1,5 @@
 import React from 'react';
-import {NavLink} from 'react-router-dom'
+import {NavLink, Link} from 'react-router-dom'
 
 class Header extends React.Component {
   
@@ -32,20 +32,27 @@ class Header extends React.Component {
 
     if(this.state.username == null || this.state.username == "null"){
       
-      loginbar = (<li><NavLink to="/signin" activeClassName="active">Đăng nhập/Đăng ký</NavLink></li>);
+      loginbar = (<li><NavLink to="/signin" style={{fontWeight: 500, color: "blueviolet"}}>Đăng nhập/Đăng ký</NavLink></li>);
       // loginbar = (<li><a href="/signin">Đăng nhập/Đăng ký</a></li>);
       profilebar = (<a></a>); 
     }
     else if(this.state.role == 0){
-      // profilebar = (<li><NavLink to="/patient" activeClassName="active">{this.state.username}</NavLink></li>);
-      // loginbar = (<li><NavLink to="/" activeClassName="active" onClick={this.handleSignout}>Đăng xuất</NavLink></li>);   
-      profilebar = (<li><a href="/patient">{this.state.username}</a></li>);
-      loginbar = (<li><a href="/" onClick={this.handleSignout}>Đăng xuất</a></li>);    
+      profilebar = (<li><NavLink to="/patient" activeClassName="active">{this.state.username}</NavLink></li>);
+      loginbar = (<li><Link to="/" activeClassName="active" onClick={this.handleSignout}>Đăng xuất</Link></li>);   
+      // profilebar = (<li><a href="/patient">{this.state.username}</a></li>);
+      // loginbar = (<li><a href="/" onClick={this.handleSignout}>Đăng xuất</a></li>);    
     }
-    else{
-      // <NavLink to="/signin" activeClassName="active">Đăng nhập/Đăng ký</NavLink>
-      profilebar = (<li><a href="/doctor">{this.state.username}</a></li>);
-      loginbar = (<li><a href="/" onClick={this.handleSignout}>Đăng xuất</a></li>);     
+    else if(this.state.role == 1){
+      profilebar = (<li><NavLink to="/doctor" activeClassName="active">{this.state.username}</NavLink></li>);
+      loginbar = (<li><Link to="/" activeClassName="active" onClick={this.handleSignout}>Đăng xuất</Link></li>);   
+      // profilebar = (<li><a href="/doctor">{this.state.username}</a></li>);
+      // loginbar = (<li><a href="/" onClick={this.handleSignout}>Đăng xuất</a></li>);     
+    }
+    else if(this.state.role == 2){
+      profilebar = (<li><NavLink to="/admin" activeClassName="active">{this.state.username}</NavLink></li>);
+      loginbar = (<li><Link to="/" activeClassName="active" onClick={this.handleSignout}>Đăng xuất</Link></li>);   
+      // profilebar = (<li><a href="/admin">{this.state.username}</a></li>);
+      // loginbar = (<li><a href="/" onClick={this.handleSignout}>Đăng xuất</a></li>);    
     }
     
     return (
@@ -53,7 +60,8 @@ class Header extends React.Component {
       <div className="header d-lg-flex justify-content-between align-items-center py-3 px-sm-3">
         {/* logo */}
         <div id="logo">
-          <h1><a href="/"><span className="fa fa-linode mr-2" />HplBooking</a></h1>
+          {/* <h1><a href="/"><span className="fa fa-linode mr-2" />HplBooking</a></h1> */}
+          <h1><NavLink exact to="/" className="fa fa-linode mr-2">HplBooking</NavLink></h1>
         </div>
         {/* //logo */}
         {/* nav */}

@@ -66,7 +66,7 @@ export default class ChangePassword extends React.Component {
               onSubmit={this.onSubmit.bind(this)}
             >
               <Form.Item style={{ marginLeft: '100px', marginTop: 100 }}>
-                <h5 className="col-lg-2">Old password</h5>
+                <h5 className="col-lg-2">Mật khẩu cũ</h5>
                 <Input
                   className="col-lg-10"
                   style={{ width: 485 }}
@@ -77,7 +77,7 @@ export default class ChangePassword extends React.Component {
               </Form.Item>
 
               <Form.Item style={{ marginLeft: '100px', marginTop: 30 }}>
-                <h5 className="col-lg-2">New password</h5>
+                <h5 className="col-lg-2">Mật khẩu mới</h5>
                 <Input
                   className="col-lg-10"
                   style={{ width: 485 }}
@@ -88,7 +88,7 @@ export default class ChangePassword extends React.Component {
               </Form.Item>
 
               <Form.Item style={{ marginLeft: '100px', marginTop: 30 }}>
-                <h5 className="col-lg-2">Password again</h5>
+                <h5 className="col-lg-4">Nhập lại mật khẩu mới</h5>
                 <Input
                   className="col-lg-10"
                   style={{ width: 485 }}
@@ -104,9 +104,9 @@ export default class ChangePassword extends React.Component {
                   nativeType="submit"
                   style={{ marginLeft: 100 }}
                 >
-                  Change
+                  Lưu
                 </Button>
-                <Button style={{ marginLeft: 140 }}>Cancel</Button>
+                <Button style={{ marginLeft: 140 }}>Hủy</Button>
               </Form.Item>
             </Form>
           </div>

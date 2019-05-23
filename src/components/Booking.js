@@ -15,12 +15,18 @@ import {
 import 'element-theme-default';
 import * as moment from 'moment';
 import * as api from './api';
+import Simplert from 'react-simplert'
 
 export default class Recruitment extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      showAlert: false,
+      titleAlert: '',
+      messageAlert: '',
+      typeAlert: '',
+
       success: false,
       form: {
         date: moment(Date.now()).format("YYYY-MM-DD"),
@@ -59,14 +65,14 @@ export default class Recruitment extends React.Component {
     console.log(date);
     // const strDate = (date.getFullYear() + '-' + (date.getMonth() +  1) + '-' + date.getDate()).toString();
     // console.log(strDate);
-    
+
     // const worktime = this.state.worktime;
     // const location = this.state.address;
     const shift = this.state.shift;
     const department = this.state.department;
     // const department = this.state.department_options[this.state.department.label].value;
 
-    if (date === null ) {
+    if (date === null) {
       return;
     }
 
@@ -92,15 +98,18 @@ export default class Recruitment extends React.Component {
         this.setState({
           success: true,
         });
+
         Notification.success({
-          title: 'Đăng kí lịch khám thành công',
+          title: "Bạn đã đăng kí lịch khám thành công",
         });
+
+        
       })
       .catch(err => {
         Notification.error({
           title: err,
         });
-        // alert(err);
+  
       });
   }
 
@@ -112,40 +121,50 @@ export default class Recruitment extends React.Component {
   render() {
     // if (this.state.success) return <Redirect to="/users1/schedule" />;
     // if (this.state.success) alert("OK");
+
+
     return (
-      <div style={{ width: 800, marginTop: 100, marginLeft: 100 }}>
-        <Form
-          className="en-US"
-          model={this.state}
-          labelWidth="120"
-          onSubmit={this.onSubmit.bind(this)}
-        >
-          {/* <Form.Item label="Address">
+      <div>
+        <Simplert
+          showSimplert={this.state.showAlert}
+          type={this.state.typeAlert}
+          title={this.state.titleAlert}
+          message={this.state.messageAlert}
+        />
+
+        <div style={{ width: 800, marginTop: 100, marginLeft: 100 }}>
+          <Form
+            className="en-US"
+            model={this.state}
+            labelWidth="120"
+            onSubmit={this.onSubmit.bind(this)}
+          >
+            {/* <Form.Item label="Address">
             <Input
               value={this.state.address}
               onChange={this.handleChange('address')}
               style={{ marginLeft: 30 }}
             />
           </Form.Item> */}
-          
-          <Form.Item label="Ngày khám">
-            <Layout.Col span="11">
-              <Form.Item
-                prop="date"
-                labelWidth="0px"
-                style={{ marginLeft: 30 }}
-              >
-                <DatePicker
-                  value={this.state.date}
-                  placeholder="Pick a date"
-                  onChange={this.handleChange('date')}
-                />
-              </Form.Item>
+
+            <Form.Item label="Ngày khám">
+              <Layout.Col span="11">
+                <Form.Item
+                  prop="date"
+                  labelWidth="0px"
+                  style={{ marginLeft: 30 }}
+                >
+                  <DatePicker
+                    value={this.state.date}
+                    placeholder="Pick a date"
+                    onChange={this.handleChange('date')}
+                  />
+                </Form.Item>
+              </Layout.Col>
+              <Layout.Col className="line" span="2">
+                -
             </Layout.Col>
-            <Layout.Col className="line" span="2">
-              -
-            </Layout.Col>
-            {/* <Layout.Col span="11">
+              {/* <Layout.Col span="11">
               <Form.Item prop="time" labelWidth="0px">
                 <TimePicker
                   value={this.state.worktime}
@@ -155,46 +174,46 @@ export default class Recruitment extends React.Component {
                 />
               </Form.Item>
             </Layout.Col> */}
-          </Form.Item>
+            </Form.Item>
 
-          <Form.Item label="Khung giờ">
-            <Select
-              onChange={this.handleChange('shift')}
-              value={this.state.shift}
-              style={{ marginLeft: 30 }}
-              placeholder="Vui lòng chọn khung giờ khám"
-            >
-              {this.state.shift_options.map(el => {
-                return (
-                  <Select.Option
-                    key={el.label}
-                    label={el.label}
-                    value={el.value}
-                  />
-                );
-              })}
-            </Select>
-          </Form.Item>
+            <Form.Item label="Khung giờ">
+              <Select
+                onChange={this.handleChange('shift')}
+                value={this.state.shift}
+                style={{ marginLeft: 30 }}
+                placeholder="Vui lòng chọn khung giờ khám"
+              >
+                {this.state.shift_options.map(el => {
+                  return (
+                    <Select.Option
+                      key={el.label}
+                      label={el.label}
+                      value={el.value}
+                    />
+                  );
+                })}
+              </Select>
+            </Form.Item>
 
-          <Form.Item label="Chuyên Khoa">
-            <Select
-              onChange={this.handleChange('department')}
-              value={this.state.department}
-              style={{ marginLeft: 30 }}
-              placeholder="Vui lòng chọn chuyên khoa"
-            >
-              {this.state.department_options.map(el => {
-                return (
-                  <Select.Option
-                    key={el.label}
-                    label={el.label}
-                    value={el.value}
-                  />
-                );
-              })}
-            </Select>
-          </Form.Item>
-{/* 
+            <Form.Item label="Chuyên Khoa">
+              <Select
+                onChange={this.handleChange('department')}
+                value={this.state.department}
+                style={{ marginLeft: 30 }}
+                placeholder="Vui lòng chọn chuyên khoa"
+              >
+                {this.state.department_options.map(el => {
+                  return (
+                    <Select.Option
+                      key={el.label}
+                      label={el.label}
+                      value={el.value}
+                    />
+                  );
+                })}
+              </Select>
+            </Form.Item>
+            {/* 
 
           <Form.Item label="Activity type">
             <Checkbox.Group
@@ -233,17 +252,18 @@ export default class Recruitment extends React.Component {
               onChange={this.handleChange('desc')}
             />
           </Form.Item> */}
-          <Form.Item>
-            <Button
-              type="primary"
-              nativeType="submit"
-              style={{ marginLeft: 200, marginRight: 100, marginTop: 50 }}
-            >
-              Create
+            <Form.Item>
+              <Button
+                type="primary"
+                nativeType="submit"
+                style={{ marginLeft: 200, marginRight: 100, marginTop: 50 }}
+              >
+                Create
             </Button>
-            <Button>Cancel</Button>
-          </Form.Item>
-        </Form>
+              <Button>Cancel</Button>
+            </Form.Item>
+          </Form>
+        </div>
       </div>
     );
   }

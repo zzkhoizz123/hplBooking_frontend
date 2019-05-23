@@ -87,17 +87,17 @@ export default class Profile extends React.Component{
           <Form className="en-US" model={this.state} labelWidth="120" onSubmit={this.onSubmit.bind(this)}>
 
             <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>
-              <h5 className = "col-lg-3">Name</h5>
+              <h5 className = "col-lg-3">Tên</h5>
               <Input className = "col-lg-10" name="username" value={this.state.name} onChange={this.handleChange('name')}></Input>
             </Form.Item>
 
             <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>
-              <h5 className = "col-lg-3">User Name</h5>
+              <h5 className = "col-lg-3">Tên đăng nhập</h5>
               <Input className = "col-lg-10" value={this.state.username} onChange={this.handleChange('username')}></Input>
             </Form.Item>
 
             <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>
-              <h5 className = "col-lg-3">Email</h5>
+              <h5 className = "col-lg-3">Địa chỉ e-mail</h5>
               <Input className = "col-lg-10" value={this.state.email} onChange={this.handleChange('email')}></Input>
             </Form.Item>
 
@@ -107,12 +107,12 @@ export default class Profile extends React.Component{
             </Form.Item>
 
             <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>
-              <h5 className = "col-lg-3">Phone Number</h5>
+              <h5 className = "col-lg-3">Số điện thoại</h5>
               <Input className = "col-lg-10" value={this.state.phoneNumber} onChange={this.handleChange('phoneNumber')}></Input>
             </Form.Item>
 
                 <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>
-                  <h5 className = "col-lg-4" style={{marginRight: "-137px"}}>Date of birth</h5>
+                  <h5 className = "col-lg-4" style={{marginRight: "-137px"}}>Ngày sinh</h5>
                   {/* <Form.Item prop="date1" labelWidth="0px" className = "col-lg-8">
                     <DatePicker
                     value={this.state.DoB}
@@ -135,17 +135,17 @@ export default class Profile extends React.Component{
             </Form.Item> */}
 
               <Form.Item style={{marginLeft: "-160px"}}>
-                <h5 className = "col-lg-2" style={{marginRight: 15}}>Sex</h5>
-                <Radio style={{marginLeft: 15}} value="female" checked={this.state.sex === 'female'} onChange={this.handleChange('sex')}>Female</Radio>
-                <Radio value="male" checked={this.state.sex === 'male'} onChange={this.handleChange('sex')}>Male</Radio>
+                <h5 className = "col-lg-2" style={{marginRight: 15}}>Giới tính</h5>
+                <Radio style={{marginLeft: 15}} value="female" checked={this.state.sex === 'female'} onChange={this.handleChange('sex')}>Nữ</Radio>
+                <Radio value="male" checked={this.state.sex === 'male'} onChange={this.handleChange('sex')}>Nam</Radio>
               </Form.Item>
 
             <Form.Item style={{marginLeft: "-160px"}}>
-              <h5 className = "col-lg-2" style={{marginRight: 15}}>Role</h5>
+              <h5 className = "col-lg-2" style={{marginRight: 15}}>Vai trò</h5>
               
-              <Radio style={{marginLeft: 15}} value="patient" checked={this.state.role === 'patient'} onChange={this.handleChange('role')}>Patient</Radio>
+              <Radio style={{marginLeft: 15}} value="patient" checked={this.state.role === 'patient'} onChange={this.handleChange('role')}>Bệnh nhân</Radio>
 
-              <Radio value="doctor" checked={this.state.position === 'doctor'} onChange={this.handleChange('role')}>Doctor</Radio>
+              <Radio value="doctor" checked={this.state.position === 'doctor'} onChange={this.handleChange('role')}>Bác sĩ</Radio>
             </Form.Item>
 
              {/* <Form.Item style={{marginLeft: "-160px", marginTop: 30}}>
@@ -154,8 +154,8 @@ export default class Profile extends React.Component{
               </Form.Item> */}
 
             <Form.Item style={{marginTop: 30}}>
-              <Button type="primary" nativeType="submit" style={{marginRight: 100}}>Save</Button>
-              <Button style={{marginLeft: 100}}>Cancel</Button>
+              <Button type="primary" nativeType="submit" style={{marginRight: 100}}>Lưu</Button>
+              <Button style={{marginLeft: 100}}>Hủy</Button>
             </Form.Item>
 
           </Form>

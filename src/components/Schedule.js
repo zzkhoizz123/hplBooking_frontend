@@ -22,38 +22,32 @@ export default class Schedule extends React.Component {
         {
           label: 'Bắt đầu',
           prop: 'time',
-          width: 260,
           sortable: true,
         },
         {
           label: 'Khoa',
           prop: 'department',
-          width: 200,
           sortable: false,
         },
         {
           label: 'Phòng',
           prop: 'room',
-          width: 200,
           sortable: false,
         },
         {
           label: 'STT',
           prop: 'stt',
-          width: 200,
           sortable: false,
         },
         {
           label: role == 0 ? 'Bác sĩ' : 'Bệnh nhân',
           prop: 'doctor',
-          width: role == 0 ? 200 : 320,
           sortable: false,
         },
           
         {
           label: role == 0 ? 'Hủy lịch' : '',
           prop: '',
-          width: role == 0 ? 200 : 0,
           sortable: false,
           render: (row, column, index) => {
             if (sessionStorage.getItem('role') == 0){
@@ -93,7 +87,7 @@ export default class Schedule extends React.Component {
           this.setState({
             showAlert: true,
             titleAlert: 'Thành công',
-            messageAlert: 'Bạn đã chấp nhận bác sĩ thành công',
+            messageAlert: 'Bạn đã xóa thành công',
             typeAlert: 'success'
           })
         }

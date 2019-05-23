@@ -31,7 +31,7 @@ class App extends Component {
           <Route path='/doctor' render = {(props) => <Doctor {...props} header={Header} />} />
           <Route path='/admin' render = {(props) => <Admin {...props} header={Header} />} />
 
-          <Route path='/about' component={About} />
+          {/* <Route path='/about' component={About} /> */}
           <Route path='/contact' component={Contact} />
           <Route path='/price' component={Price} />
           {/* <Route path='/profile' component={Profile} /> */}

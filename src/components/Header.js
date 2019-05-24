@@ -59,7 +59,7 @@ class Header extends React.Component {
       <div className="container-fluid">
       <div className="header d-lg-flex justify-content-between align-items-center py-3 px-sm-3">
         {/* logo */}
-        <div id="logo">
+        <div id="logo" style={{marginLeft:30}}>
           {/* <h1><a href="/"><span className="fa fa-linode mr-2" />HplBooking</a></h1> */}
           <h1><NavLink exact to="/" className="fa fa-linode mr-2">HplBooking</NavLink></h1>
         </div>
@@ -72,13 +72,14 @@ class Header extends React.Component {
             <ul className="menu">
               <li><NavLink exact to="/" activeClassName="active">Trang chủ</NavLink></li>
               {/* <li><a href="/" className="active">Trang chủ</a></li> */}
-              <li><NavLink to="/about" activeClassName="active">Về chúng tôi</NavLink></li>
+              {/* <li><NavLink to="/about" activeClassName="active">Về chúng tôi</NavLink></li> */}
               {/* <li><a href="/about" >Về chúng tôi</a></li> */}
               {/* <li><a href="/signin">Sign In/Up</a></li> */}
               <li><NavLink to="/contact" activeClassName="active">Liên hệ</NavLink></li>
               {/* <li><a href="/contact">Liên hệ</a></li> */}
-              <li><NavLink to="/price" activeClassName="active">Giá cả</NavLink></li>
+              {/* <li><NavLink to="/price" activeClassName="active">Giá cả</NavLink></li> */}
               {/* <li><a href="/price">Giá cả</a></li> */}
+              
 
            
 
@@ -100,6 +101,9 @@ class Header extends React.Component {
                   <li><a href="#partners" className="drop-text">Partners</a></li>
                 </ul>
               </li> */}
+
+          
+        
               
             </ul>
           </nav>

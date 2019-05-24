@@ -1,6 +1,7 @@
 import React from 'react'
 import api from './api';
 import {Notification} from 'element-react';
+import Simplert from 'react-simplert'
 
 require('../css/SignIn.css');
 
@@ -12,6 +13,11 @@ class Signin extends React.Component {
     super(props);
 
     this.state = {
+      showAlert: false,
+      titleAlert: '',
+      messageAlert: '',
+      typeAlert: '',
+
       formSignup: {
         username: '',
         password: '',
@@ -64,7 +70,9 @@ class Signin extends React.Component {
     const department1 = parseInt(department, 10);
     const room1 = parseInt(room, 10)
     if(password !== rePass){
-      alert("password incorrect!");
+      Notification.error({
+        title: "Vui lòng nhập lại mật khẩu!"
+      });
       return;
     }
 
@@ -73,20 +81,33 @@ class Signin extends React.Component {
       password.length < 8 ||
       !this.validateEmail(email)
     ) {
-      alert('Input is false! Check again!');
+      Notification.error({
+        title: "Vui lòng kiểm tra lại!"
+      });
       return;
     }
 
     api
       .signup(name, username, password, email,  role, SSN, phoneNumber, DoB, sex, department1, room1)
       .then(status => {
-        alert("Sign up success! Let go to Sign in");
-        this.props.history.go("/signin");
+        this.setState({
+          showAlert: true,
+          titleAlert: 'Thành công',
+          messageAlert: 'Bạn đã đăng ký thành công',
+          typeAlert: 'success'
+        })
+        // this.props.history.go("/signin#");
+        window.setTimeout(function(){
+          // Move to a new location or you can do something else
+          window.location.href = "/signin";
+        }, 2000);
+
         this.forceUpdate();
       })
       .catch(err => {
-        alert("Input is false. Check again!");
-        //alert(err);
+        Notification.error({
+          title: err
+        });
       });
 
   }
@@ -107,8 +128,16 @@ class Signin extends React.Component {
         sessionStorage.setItem('jwt', data.token);
         sessionStorage.setItem('id', data.id);
 
-        this.props.history.push("/");
-        window.location.reload();
+        if (data.role == 0){
+          window.location.href = "/patient";
+        }
+        else if(data.role == 1){
+          window.location.href = "/doctor";
+        }
+        else window.location.href = "/admin";
+         
+        // this.props.history.push("/");
+        // window.location.reload();
  
       })
       .catch(err => {
@@ -139,6 +168,9 @@ class Signin extends React.Component {
   };
 
   render() {
+
+    
+
    let departmentbar, roombar;
     if(this.state.field == ''){
       departmentbar = (<div></div>);
@@ -147,7 +179,7 @@ class Signin extends React.Component {
     else{
       departmentbar = (
         <div className="group">
-          <label htmlFor="dep" className="label">Department</label>
+          <label htmlFor="dep" className="label">Khoa</label>
           Đa Khoa: <input id="dep" type="radio" 
             value = "1"
             checked={this.state.formSignup.department === '1'}
@@ -172,7 +204,7 @@ class Signin extends React.Component {
       );
       roombar = (
         <div className="group">
-          <label htmlFor="room" className="label">Room</label>
+          <label htmlFor="room" className="label">Phòng</label>
           <input type="text" className="input" 
             value={this.state.formSignup["room"]}
             onChange={this.handleChangeSignup.bind(this, 'room')}
@@ -183,12 +215,19 @@ class Signin extends React.Component {
 
     return (
       <div>
+        <Simplert
+            showSimplert={this.state.showAlert}
+            type={this.state.typeAlert}
+            title={this.state.titleAlert}
+            message={this.state.messageAlert}
+        />
+
         <section className={this.state.tab == "tab-2" ? "signup-wrap" : "login-wrap"  }>
           <div className="main_w3agile">
             <input id="tab-1" type="radio" name="tab" className="sign-in" defaultChecked onClick= {this.onTab}/>
-            <label htmlFor="tab-1" className="tab">Sign In</label>
+            <label htmlFor="tab-1" className="tab">Đăng nhập</label>
             <input id="tab-2" type="radio" name="tab" className="sign-up" onClick= {this.onTab}/>
-            <label htmlFor="tab-2" className="tab">Sign Up</label>
+            <label htmlFor="tab-2" className="tab">Đăng kí</label>
             <div className="login-form">
               {/* signin form */}
               <div className="signin_wthree">
@@ -196,14 +235,14 @@ class Signin extends React.Component {
                  model={this.state.formSignin}
                  onSubmit={this.onSubmitSignin.bind(this)}>  
                   <div className="group">
-                    <label htmlFor="user" className="label">Username</label>
+                    <label htmlFor="user" className="label">Tên đăng nhập</label>
                     <input id="user" type="text" className="input" 
                     value={this.state.formSignin["username"]}
                     onChange={this.handleChangeSignin.bind(this, 'username')}
                     required />
                   </div>
                   <div className="group">
-                    <label htmlFor="pass" className="label">Password</label>
+                    <label htmlFor="pass" className="label">Mật khẩu</label>
                     <input id="pass" type="password" className="input" data-type="password" 
                     value={this.state.formSignin["password"]}
                     onChange={this.handleChangeSignin.bind(this, 'password')}
@@ -212,14 +251,15 @@ class Signin extends React.Component {
                   <div className="group">
                     <input id="check" type="checkbox" className="check" defaultChecked />
                     <label htmlFor="check">
-                      <span className="icon" /> Keep me Signed in</label>
+                      <span className="icon" /> Ghi nhớ đăng nhập</label>
                   </div>
                   <div className="group">
-                    <input type="submit" className="button" defaultValue="Sign In" />
+                    {/* <input type="submit" className="button" Value="Đăng nhập" /> */}
+                    <button type="submit" className="button"> Đăng nhập</button>
                   </div>
                   <div className="hr" />
                   <div className="foot-lnk">
-                    <p><a href="#">Forgot Password?</a></p>
+                    <p><a href="#">Quên mật khẩu?</a></p>
                   </div>
                 </form>
               </div>
@@ -230,7 +270,7 @@ class Signin extends React.Component {
                   model={this.state.formSignup}
                   onSubmit={this.onSubmitSignup.bind(this)} >
                   <div className="group">
-                    <label htmlFor="user1" className="label">Name</label>
+                    <label htmlFor="user1" className="label">Tên</label>
                     <input type="text" className="input" 
                       value={this.state.formSignup["name"]}
                       onChange={this.handleChangeSignup.bind(this, 'name')}
@@ -238,7 +278,7 @@ class Signin extends React.Component {
                   </div>
                   
                   <div className="group">
-                    <label htmlFor="user1" className="label">Username</label>
+                    <label htmlFor="user1" className="label">Tên đăng nhập</label>
                     <input type="text" className="input" 
                       value={this.state.formSignup["username"]}
                       onChange={this.handleChangeSignup.bind(this, 'username')}
@@ -254,7 +294,7 @@ class Signin extends React.Component {
                   </div>
 
                   <div className="group">
-                    <label htmlFor="password1" className="label">Password</label>
+                    <label htmlFor="password1" className="label">Mật khẩu</label>
                     <input id="password1" type="password" className="input" data-type="password"      
                       value={this.state.formSignup.password}
                       onChange={this.handleChangeSignup.bind(this, 'password')}           
@@ -263,7 +303,7 @@ class Signin extends React.Component {
                     {this.state.formSignup.password.length < 8 &&
                     this.state.formSignup.password.length > 0 ? (
                       <h6 style={{ color: 'red', marginLeft: 140 }}>
-                        Password có ít nhất 8 kí tự{' '}
+                        Mật khẩu có ít nhất 8 kí tự{' '}
                       </h6>
                     ) : (
                       ''
@@ -272,7 +312,7 @@ class Signin extends React.Component {
                   </div>
 
                   <div className="group">
-                    <label htmlFor="password2" className="label">Re-Enter Password</label>
+                    <label htmlFor="password2" className="label">Nhập lại mật khẩu</label>
                     <input id="password2" type="password" className="input" data-type="password"
                     
                     value={this.state.formSignup.rePass}
@@ -284,7 +324,7 @@ class Signin extends React.Component {
                     this.state.formSignup.rePass.length > 0 && 
                     this.state.formSignup.password != this.state.formSignup.rePass? (
                       <h6 style={{ color: 'red', marginLeft: 140 }}>
-                        Password phải trùng nhau{' '}
+                        Mật khẩu nhập lại phải trùng nhau{' '}
                       </h6>
                     ) : (
                       ''
@@ -293,7 +333,7 @@ class Signin extends React.Component {
                   </div>
 
                   <div className="group">
-                    <label htmlFor="email" className="label">Email Address</label>
+                    <label htmlFor="email" className="label">Địa chỉ e-mail</label>
                     <input id="email" type="email" className="input"
                        value={this.state.formSignup.email}
                       onChange={this.handleChangeSignup.bind(this, 'email')}              
@@ -304,7 +344,7 @@ class Signin extends React.Component {
                       ''
                     ) : (
                       <h6 style={{ color: 'red', marginLeft: 140 }}>
-                        Vui lòng nhập đúng email{' '}
+                        Vui lòng nhập đúng e-mail{' '}
                       </h6>
                     )}
                   </div>
@@ -318,7 +358,7 @@ class Signin extends React.Component {
                   </div>
 
                   <div className="group">
-                    <label htmlFor="user1" className="label">Phone Number</label>
+                    <label htmlFor="user1" className="label">Số điện thoại</label>
                     <input type="text" className="input" 
                       value={this.state.formSignup["phoneNumber"]}
                       onChange={this.handleChangeSignup.bind(this, 'phoneNumber')}
@@ -326,21 +366,21 @@ class Signin extends React.Component {
                   </div>
 
                    <div className="group">
-                    <label htmlFor="date" className="label">Birth Date</label>
+                    <label htmlFor="date" className="label">Ngày sinh</label>
                     <input id="DoB" type="date" className="input"
                        value={this.state.formSignup.DoB}
                       onChange={this.handleChangeSignup.bind(this, 'DoB')}              
                     required />
                   </div>
-
+                
                   <div className="group">
-                    <label htmlFor="sex" className="label">Sex</label>
-                    Male: <input id="sex" type="radio" 
+                    <label htmlFor="sex" className="label">Giới tính</label>
+                    Nam: <input id="sex" type="radio" 
                       value="male"
                       checked={this.state.formSignup.sex === 'male'}
                       onChange={this.handleChangeSignup.bind(this, 'sex')}              
                       /> <br />
-                    Female: <input id="sex" type="radio" 
+                    Nữ: <input id="sex" type="radio" 
                       value="female"
                       checked={this.state.formSignup.sex === 'female'}
                       onChange={this.handleChangeSignup.bind(this, 'sex')}              
@@ -348,13 +388,13 @@ class Signin extends React.Component {
                   </div>
 
                   <div className="group">
-                    <label htmlFor="role" className="label">Role</label>
-                      Patient: <input id="role" type="radio" onClick= {this.onPatientField}
+                    <label htmlFor="role" className="label">Vai trò</label>
+                      Bệnh nhân: <input id="role" type="radio"  onClick= {this.onPatientField}
                         value = "patient"
                         checked={this.state.formSignup.role === 'patient'}
                         onChange={this.handleChangeSignup.bind(this, 'role')}              
                         /> <br />
-                      Doctor: <input id="role" type="radio" onClick= {this.onDoctorField} 
+                      Bác sĩ: <input id="role" type="radio" onClick= {this.onDoctorField} 
                         value="doctor"
                         checked={this.state.formSignup.role === 'doctor'}
                         onChange={this.handleChangeSignup.bind(this, 'role')}              
@@ -365,11 +405,12 @@ class Signin extends React.Component {
                   {roombar}
 
                   <div className="group">
-                    <input type="submit" className="button" defaultValue="Sign Up" />
+                    {/* <input type="submit" className="button" Value="Đăng ký" /> */}
+                    <button type="submit" className="button"> Đăng ký</button>
                   </div>
                   <div className="hr" />
                   <div className="foot-lnk">
-                    <label htmlFor="tab-1">Already Member? </label>
+                    <label htmlFor="tab-1">Đã có tài khoản? </label>
                   </div>
 
                 </form>

@@ -20,7 +20,7 @@ class Home extends React.Component{
                   <a href={"/about"} className="btn button-style mt-md-5 mt-4">Xem thêm</a>
                 </div>
                 <div className="banner-img">
-                  <img src={require("../images/banner.png")} alt="true" className="img-fluid" />
+                  <img src={require("../images/homedoctor.png")} alt="true" className="img-fluid" />
                  
                 </div>
               </div>

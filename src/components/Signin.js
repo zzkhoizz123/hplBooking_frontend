@@ -128,10 +128,10 @@ class Signin extends React.Component {
         sessionStorage.setItem('jwt', data.token);
         sessionStorage.setItem('id', data.id);
 
-        if (data.role == 0){
+        if (data.role === 0){
           window.location.href = "/patient";
         }
-        else if(data.role == 1){
+        else if(data.role === 1){
           window.location.href = "/doctor";
         }
         else window.location.href = "/admin";
@@ -172,7 +172,7 @@ class Signin extends React.Component {
     
 
    let departmentbar, roombar;
-    if(this.state.field == ''){
+    if(this.state.field === ''){
       departmentbar = (<div></div>);
       roombar = (<div></div>);
     }
@@ -222,7 +222,7 @@ class Signin extends React.Component {
             message={this.state.messageAlert}
         />
 
-        <section className={this.state.tab == "tab-2" ? "signup-wrap" : "login-wrap"  }>
+        <section className={this.state.tab === "tab-2" ? "signup-wrap" : "login-wrap"  }>
           <div className="main_w3agile">
             <input id="tab-1" type="radio" name="tab" className="sign-in" defaultChecked onClick= {this.onTab}/>
             <label htmlFor="tab-1" className="tab">Đăng nhập</label>
@@ -322,7 +322,7 @@ class Signin extends React.Component {
 
                     {this.state.formSignup.rePass.length < 8 &&
                     this.state.formSignup.rePass.length > 0 && 
-                    this.state.formSignup.password != this.state.formSignup.rePass? (
+                    this.state.formSignup.password !== this.state.formSignup.rePass? (
                       <h6 style={{ color: 'red', marginLeft: 140 }}>
                         Mật khẩu nhập lại phải trùng nhau{' '}
                       </h6>

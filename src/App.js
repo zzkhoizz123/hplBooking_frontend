@@ -4,9 +4,7 @@ import { Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Contact from './components/Contact';
-import About from './components/About';
 import Price from './components/Price';
-import Profile from './components/Profile';
 
 import Home from './components/Home';
 import Signin from './components/Signin';

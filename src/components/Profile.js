@@ -4,9 +4,7 @@ import {
   Layout,
   Form,
   Input,
-  Radio,
-  DatePicker,
-  Slider
+  Radio
 } from 'element-react';
 import 'element-theme-default';
 

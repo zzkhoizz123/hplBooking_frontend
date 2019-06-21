@@ -45,7 +45,7 @@ export default class Recruitment extends React.Component {
         { label: '16h - 17h', value: 8 }
       ],
       department_options: [
-        { label: 'XXX', value: 1 },
+        { label: 'Đa Khoa', value: 1 },
         { label: 'Nha Khoa', value: 2 },
         { label: 'Tim mạch', value: 3 },
         { label: 'Tai mũi họng', value: 4 }
